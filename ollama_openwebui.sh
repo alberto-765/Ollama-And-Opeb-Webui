@@ -3,6 +3,7 @@
 
 CONTAINER="open-webui"
 ACTION=${1:-start} # default action is start
+LOCAL_PORT=3000
 
 
 run_container ()
@@ -27,12 +28,16 @@ case $ACTION in
       echo "Creating the container"
       run_container
     fi
+
+    xdg-open "http://localhost:$LOCAL_PORT"
   ;;
   update) 
     echo "Updating open-webui container"
     docker stop $CONTAINER && docker rm $CONTAINER
     docker pull ghcr.io/open-webui/open-webui:main
     run_container
+
+    xdg-open "http://localhost:$LOCAL_PORT"
   ;;
   stop) 
     echo "Stopping ollama and open-webui"
